@@ -9,6 +9,10 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
+        self.add_league.clicked.connect(self.add_button_clicked)
+
+    def add_button_clicked(self):
+        self.league_list.addItem(self.league_name_add.text())
 
 
 if __name__ == '__main__':
