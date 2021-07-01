@@ -3,9 +3,10 @@ import sys
 
 from PyQt5 import uic, QtWidgets
 from PyQt5.QtCore import QDir
-from PyQt5.QtWidgets import QMessageBox, QFileDialog
+from PyQt5.QtWidgets import QMessageBox, QFileDialog, QDialog
 from league_database import LeagueDatabase
 from league import League
+from qt_files.edit_dialog import EditDialog
 
 Ui_MainWindow, QtBaseWindow = uic.loadUiType("main_window.ui")
 
@@ -19,7 +20,14 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
         self.action_open.triggered.connect(self.action_open_triggered)
 
     def edit_button_clicked(self):
-        row = self.
+        row = self.league_list.currentRow()
+        league = self._dia_leagues[row]
+        dialogue = EditDialog()
+        if dialogue.exec() == QDialog.DialogCode.Accepted:
+            pass
+        else:
+            pass
+
 
     def action_open_triggered(self):
         dialog = QFileDialog()
