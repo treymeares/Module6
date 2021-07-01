@@ -9,7 +9,6 @@ from league import League
 
 Ui_MainWindow, QtBaseWindow = uic.loadUiType("main_window.ui")
 
-
 class MainWindow(QtBaseWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -18,6 +17,9 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
         self.add_league.clicked.connect(self.add_button_clicked)
         self.delete_league.clicked.connect(self.delete_button_clicked)
         self.action_open.triggered.connect(self.action_open_triggered)
+
+    def edit_button_clicked(self):
+        row = self.
 
     def action_open_triggered(self):
         dialog = QFileDialog()
