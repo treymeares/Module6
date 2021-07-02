@@ -51,6 +51,12 @@ class League(IdentifiedObject):
         else:
             raise DuplicateOID(team)
 
+    def delete_team(self, team):
+        for x in self._teams_list:
+            if team is x:
+                self.teams.remove(x)
+        return self._teams_list
+
     def add_competition(self, competition):
         '''
         Add a competition to list

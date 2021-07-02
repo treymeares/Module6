@@ -20,14 +20,20 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
         self.delete_league.clicked.connect(self.delete_button_clicked)
         self.action_open.triggered.connect(self.action_open_triggered)
 
+    def warn(self, title, message):
+        mb = QMessageBox(QMessageBox.Icon.Critical, title, message, QMessageBox.StandardButton.Ok)
+        return mb.exec()
+
     def edit_button_clicked(self):
-        row = self.league_list.currentRow()
-        league = self._dia_leagues[row]
-        dialogue = EditDialog(league)
-        if dialogue.exec() == QDialog.DialogCode.Accepted:
-            pass
-        else:
-            pass
+        row = self.selected_row()
+        print(row)
+        if row == -1:
+            return self.warn("Select league to edit", "You must select a league")
+        league_from_main = self._dia_leagues[row]
+        dialog = EditDialog(league_from_main)
+        if dialog.exec() == QDialog.DialogCode.Accepted:
+            dialog.update_league(league_from_main)
+        self.update_ui()
 
     def action_open_triggered(self):
         dialog = QFileDialog()
@@ -54,6 +60,17 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
         else:
             print("Aborted")
 
+    def selected_row(self):
+        selection = self.league_list.selectedItems()
+        if len(selection) == 0:
+            return -1
+        assert len(selection) == 1
+        selected_item = selection[0]
+        for i, l in enumerate(self._dia_leagues):
+            if str(l) == selected_item.text():
+                return i
+        return -1
+
     def add_button_clicked(self):
         l = League(self.league_oid_add.text(), self.league_name_add.text())
         self._dia_leagues.append(l)
@@ -61,10 +78,13 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
         print(str(l))
 
     def update_ui(self):
+        row = self.selected_row()
         self.league_list.clear()
         for x in self._dia_leagues:
             self.league_list.addItem(str(x))
             print(x)
+        if row != -1 and len(self._dia_leagues) > row:
+            self.league_list.setCurrentItem(self.league_list.item(row))
 
 
 if __name__ == '__main__':
