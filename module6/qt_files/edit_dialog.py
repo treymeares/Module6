@@ -9,7 +9,7 @@ Ui_MainWindow, QtBaseWindow = uic.loadUiType("edit_dialog.ui")
 
 
 class EditDialog(QtBaseWindow, Ui_MainWindow):
-    def __init__(self, league=None, parent=None):
+    def __init__(self, team=None, parent=None):
         super().__init__(parent)
         self.setupUi(self)
         self._dia_teams_list = []
