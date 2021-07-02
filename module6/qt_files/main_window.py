@@ -16,18 +16,18 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
         self.setupUi(self)
         self._dia_leagues = []
         self.add_league.clicked.connect(self.add_button_clicked)
+        self.edit_league.clicked.connect(self.edit_button_clicked)
         self.delete_league.clicked.connect(self.delete_button_clicked)
         self.action_open.triggered.connect(self.action_open_triggered)
 
     def edit_button_clicked(self):
         row = self.league_list.currentRow()
         league = self._dia_leagues[row]
-        dialogue = EditDialog()
+        dialogue = EditDialog(league)
         if dialogue.exec() == QDialog.DialogCode.Accepted:
             pass
         else:
             pass
-
 
     def action_open_triggered(self):
         dialog = QFileDialog()
@@ -55,15 +55,16 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
             print("Aborted")
 
     def add_button_clicked(self):
-        l = League(self.league_name_add.text(), self.league_oid_add)
+        l = League(self.league_oid_add.text(), self.league_name_add.text())
         self._dia_leagues.append(l)
         self.update_ui()
-        self.league_list.addItem(self.league_name_add.text())
+        print(str(l))
 
     def update_ui(self):
         self.league_list.clear()
         for x in self._dia_leagues:
             self.league_list.addItem(str(x))
+            print(x)
 
 
 if __name__ == '__main__':
