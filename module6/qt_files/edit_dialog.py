@@ -3,13 +3,14 @@ import sys
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QMessageBox, QDialog
 
+from qt_files.edit_members_dialog import EditMembersDialog
 from team import Team
 
 Ui_MainWindow, QtBaseWindow = uic.loadUiType("edit_dialog.ui")
 
 
 class EditDialog(QtBaseWindow, Ui_MainWindow):
-    def __init__(self, team=None, parent=None):
+    def __init__(self, league=None, parent=None):
         super().__init__(parent)
         self.setupUi(self)
         self._dia_teams_list = []
@@ -32,7 +33,7 @@ class EditDialog(QtBaseWindow, Ui_MainWindow):
             print("Aborted")
 
     def edit_button_clicked(self):
-        row = self.teams_list.currentRow()
+        row = self.list_teams.currentRow()
         team = self._dia_teams_list[row]
         dialogue = EditMembersDialog(team)
         if dialogue.exec() == QDialog.DialogCode.Accepted:
