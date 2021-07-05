@@ -16,6 +16,7 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
         super().__init__(parent)
         self.setupUi(self)
         self._dia_leagues = []
+        self.league_loaded = None
         self.add_league.clicked.connect(self.add_button_clicked)
         self.edit_league.clicked.connect(self.edit_button_clicked)
         self.delete_league.clicked.connect(self.delete_button_clicked)
@@ -53,14 +54,19 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
                     self.update_ui()
 
     def action_save_triggered(self):
-        dialog = QFileDialog.Options()
-        # widget = QWidget()
-        file = QFileDialog.getSaveFileName(self, "Save File", "default.pickle", ".pickle")
-        # file_name = file[2]
-        print(file)
-        # saver = LeagueDatabase.instance()
-        # saver.save(file_name)
-        print(file[0])
+        file, check = QFileDialog.getSaveFileName(None, "Save File",
+                                                  "", "Database File (*.pickle)")
+        if check:
+            # new_list = []
+            # for x in self._dia_leagues:
+            #     print(x)
+            #     if x not in new_list:
+            #         new_list.append(x)
+            pickler = LeagueDatabase.instance()
+            # for x in new_list:
+            #     pickler.add_league(x)
+            pickler.save(file)
+            self.update_ui()
 
     def delete_button_clicked(self):
         dialog = QMessageBox(QMessageBox.Icon.Question, "Remove League?", "Are you sure you want to delete League",
@@ -85,6 +91,8 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
 
     def add_button_clicked(self):
         l = League(self.league_oid_add.text(), self.league_name_add.text())
+        adder = LeagueDatabase.instance()
+        adder.add_league(l)
         self._dia_leagues.append(l)
         self.update_ui()
         print(str(l))

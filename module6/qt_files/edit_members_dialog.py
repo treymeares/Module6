@@ -25,7 +25,7 @@ class EditMembersDialog(QtBaseWindow, Ui_MainWindow):
 
     def update_team(self, team_from_main):
         if len(self._new_member_list) > 0:
-            self.add_team_to_league(team_from_main)
+            self.add_member_to_team(team_from_main)
         if len(self.delete_member_list) > 0:
             self.delete_member_from_team(team_from_main)
         self.update_ui()
