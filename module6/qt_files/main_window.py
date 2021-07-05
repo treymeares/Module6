@@ -1,14 +1,15 @@
 import os
 import sys
 
-from PyQt5 import uic, QtWidgets
+from PyQt5 import uic, QtWidgets, QtGui
 from PyQt5.QtCore import QDir
-from PyQt5.QtWidgets import QMessageBox, QFileDialog, QDialog
+from PyQt5.QtWidgets import QMessageBox, QFileDialog, QDialog, QWidget
 from league_database import LeagueDatabase
 from league import League
 from qt_files.edit_dialog import EditDialog
 
 Ui_MainWindow, QtBaseWindow = uic.loadUiType("main_window.ui")
+
 
 class MainWindow(QtBaseWindow, Ui_MainWindow):
     def __init__(self, parent=None):
@@ -19,6 +20,7 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
         self.edit_league.clicked.connect(self.edit_button_clicked)
         self.delete_league.clicked.connect(self.delete_button_clicked)
         self.action_open.triggered.connect(self.action_open_triggered)
+        self.action_save.triggered.connect(self.action_save_triggered)
 
     def warn(self, title, message):
         mb = QMessageBox(QMessageBox.Icon.Critical, title, message, QMessageBox.StandardButton.Ok)
@@ -49,6 +51,16 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
                 for x in league_loaded.leagues:
                     self._dia_leagues.append(x)
                     self.update_ui()
+
+    def action_save_triggered(self):
+        dialog = QFileDialog.Options()
+        # widget = QWidget()
+        file = QFileDialog.getSaveFileName(self, "Save File", "default.pickle", ".pickle")
+        # file_name = file[2]
+        print(file)
+        # saver = LeagueDatabase.instance()
+        # saver.save(file_name)
+        print(file[0])
 
     def delete_button_clicked(self):
         dialog = QMessageBox(QMessageBox.Icon.Question, "Remove League?", "Are you sure you want to delete League",

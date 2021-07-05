@@ -41,7 +41,7 @@ class EditDialog(QtBaseWindow, Ui_MainWindow):
             league_from_main.add_team(x)
         self.update_ui()
 
-    def delete_button_clicked(self, league_from_main):
+    def delete_button_clicked(self):
         dialog = QMessageBox(QMessageBox.Icon.Question, "Remove Team?", "Are you sure you want to delete Team?",
                              QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         result = dialog.exec()
@@ -52,14 +52,31 @@ class EditDialog(QtBaseWindow, Ui_MainWindow):
         else:
             print("Aborted")
 
+    def warn(self, title, message):
+        mb = QMessageBox(QMessageBox.Icon.Critical, title, message, QMessageBox.StandardButton.Ok)
+        return mb.exec()
+
     def edit_button_clicked(self):
-        row = self.list_teams.currentRow()
-        team = self._dia_teams_list[row]
-        dialogue = EditMembersDialog(team)
-        if dialogue.exec() == QDialog.DialogCode.Accepted:
-            pass
-        else:
-            pass
+        row = self.selected_row()
+        print(row)
+        if row == -1:
+            return self.warn("Select league to edit", "You must select a league")
+        team_from_main = self._dia_teams_list[row]
+        dialog = EditMembersDialog(team_from_main)
+        if dialog.exec() == QDialog.DialogCode.Accepted:
+            dialog.update_team(team_from_main)
+        self.update_ui()
+
+    def selected_row(self):
+        selection = self.list_teams.selectedItems()
+        if len(selection) == 0:
+            return -1
+        assert len(selection) == 1
+        selected_item = selection[0]
+        for i, l in enumerate(self._dia_teams_list):
+            if str(l) == selected_item.text():
+                return i
+        return -1
 
     def add_button_clicked(self):
         t = Team(self.team_oid_add.text(), self.team_name_add.text())
