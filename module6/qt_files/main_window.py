@@ -4,9 +4,12 @@ import sys
 from PyQt5 import uic, QtWidgets, QtGui
 from PyQt5.QtCore import QDir
 from PyQt5.QtWidgets import QMessageBox, QFileDialog, QDialog, QWidget
+
+from emailer import Emailer
 from league_database import LeagueDatabase
 from league import League
 from qt_files.edit_dialog import EditDialog
+from team import Team
 
 Ui_MainWindow, QtBaseWindow = uic.loadUiType("main_window.ui")
 
@@ -18,6 +21,7 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
         self._dia_leagues = []
         self.league_loaded = None
         self.add_league.clicked.connect(self.add_button_clicked)
+        self.email_league.clicked.connect(self.email_button_clicked)
         self.edit_league.clicked.connect(self.edit_button_clicked)
         self.delete_league.clicked.connect(self.delete_button_clicked)
         self.action_open.triggered.connect(self.action_open_triggered)
@@ -26,6 +30,14 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
     def warn(self, title, message):
         mb = QMessageBox(QMessageBox.Icon.Critical, title, message, QMessageBox.StandardButton.Ok)
         return mb.exec()
+
+    def email_button_clicked(self):
+        fe = Emailer.instance()
+        fe.configure("treymeares@gmail.com")
+        for x in self._dia_leagues:
+            for y in x.teams:
+                for z in y.members:
+                    fe.send_plain_email(z.email, "Subject", "Body")
 
     def edit_button_clicked(self):
         row = self.selected_row()
@@ -57,14 +69,7 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
         file, check = QFileDialog.getSaveFileName(None, "Save File",
                                                   "", "Database File (*.pickle)")
         if check:
-            # new_list = []
-            # for x in self._dia_leagues:
-            #     print(x)
-            #     if x not in new_list:
-            #         new_list.append(x)
             pickler = LeagueDatabase.instance()
-            # for x in new_list:
-            #     pickler.add_league(x)
             pickler.save(file)
             self.update_ui()
 

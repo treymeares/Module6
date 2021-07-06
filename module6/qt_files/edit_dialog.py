@@ -1,7 +1,10 @@
 import sys
 
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QMessageBox, QDialog
+from PyQt5.QtCore import QDir
+from PyQt5.QtWidgets import QMessageBox, QDialog, QFileDialog
+
+from league_database import LeagueDatabase
 from qt_files.edit_members_dialog import EditMembersDialog
 from team import Team
 
@@ -18,18 +21,57 @@ class EditDialog(QtBaseWindow, Ui_MainWindow):
         self.add_team.clicked.connect(self.add_button_clicked)
         self.delete_team.clicked.connect(self.delete_button_clicked)
         self.edit_team.clicked.connect(self.edit_button_clicked)
+        self.action_export.clicked.connect(self.action_export_triggered)
+        self.action_import.clicked.connect(self.action_import_triggered)
         if league_from_main:
             for x in league_from_main.teams:
                 self._dia_teams_list.append(x)
                 self.update_ui()
+        current_league = league_from_main
+
+    def warn(self, title, message):
+        mb = QMessageBox(QMessageBox.Icon.Critical, title, message, QMessageBox.StandardButton.Ok)
+        return mb.exec()
+
+    def action_import_triggered(self):
+        dialog = QFileDialog()
+        dialog.setFileMode(QFileDialog.AnyFile)
+        dialog.setFilter(QDir.Files)
+
+        if dialog.exec_():
+            dia_file_name = dialog.selectedFiles()
+
+            if dia_file_name[0].endswith('.csv'):
+                league_loaded = LeagueDatabase.load(str(dia_file_name[0]))
+                print(league_loaded)
+                for x in league_loaded.leagues:
+                    for y in x.teams:
+                        self._dia_teams_list.append(y)
+                        self.update_ui()
+
+    def action_export_triggered(self, league_from_main):
+        file, check = QFileDialog.getSaveFileName(None, "Save File",
+                                                  "", "Database File (*.csv)")
+        if check:
+            pickler = LeagueDatabase.instance()
+            pickler.export_league(league_from_main, file)
+            self.update_ui()
+
+    def exporter(self, league_from_main):
+        pickler = LeagueDatabase.instance()
+        pickler.export_league(league_from_main, file)
+        self.update_ui()
 
     def update_league(self, league_from_main):
-        if len(self.new_team) > 0:
-            self.add_team_to_league(league_from_main)
-        if len(self._delete_team_list) > 0:
-            self.delete_team_from_league(league_from_main)
-        self.update_ui()
-        print(league_from_main.teams)
+        try:
+            if len(self.new_team) > 0:
+                self.add_team_to_league(league_from_main)
+            if len(self._delete_team_list) > 0:
+                self.delete_team_from_league(league_from_main)
+            self.update_ui()
+            print(league_from_main.teams)
+        except Exception:
+            self.warn("Duplicate ID", "The team with the duplicate ID was not saved!")
 
     def delete_team_from_league(self, league_from_main):
         for x in self._delete_team_list:
@@ -51,10 +93,6 @@ class EditDialog(QtBaseWindow, Ui_MainWindow):
             self.update_ui()
         else:
             print("Aborted")
-
-    def warn(self, title, message):
-        mb = QMessageBox(QMessageBox.Icon.Critical, title, message, QMessageBox.StandardButton.Ok)
-        return mb.exec()
 
     def edit_button_clicked(self):
         row = self.selected_row()

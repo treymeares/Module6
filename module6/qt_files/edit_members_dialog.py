@@ -23,13 +23,20 @@ class EditMembersDialog(QtBaseWindow, Ui_MainWindow):
                 self._dia_members_list.append(x)
                 self.update_ui()
 
+    def warn(self, title, message):
+        mb = QMessageBox(QMessageBox.Icon.Critical, title, message, QMessageBox.StandardButton.Ok)
+        return mb.exec()
+
     def update_team(self, team_from_main):
-        if len(self._new_member_list) > 0:
-            self.add_member_to_team(team_from_main)
-        if len(self.delete_member_list) > 0:
-            self.delete_member_from_team(team_from_main)
-        self.update_ui()
-        print(self._dia_members_list)
+        try:
+            if len(self._new_member_list) > 0:
+                self.add_member_to_team(team_from_main)
+            if len(self.delete_member_list) > 0:
+                self.delete_member_from_team(team_from_main)
+            self.update_ui()
+            print(self._dia_members_list)
+        except Exception:
+            self.warn("Duplicate Member ID", "The member with the duplicate ID was not saved!")
 
     def add_member_to_team(self, team_from_main):
         for x in self._new_member_list:
