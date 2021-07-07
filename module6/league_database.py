@@ -55,30 +55,28 @@ class LeagueDatabase:
         with open(file_name, mode="wb") as f:
             pickle.dump(self, f)
 
-    def import_league(self, league_name, file_name):
+    def import_league(self, league, file_name):
         try:
             with open(file_name, "r", encoding="utf-8-sig") as f:
                 csvreader = csv.reader(f)
                 # This skips the first row of the CSV file.
                 next(csvreader)
                 _last_oid = len(self.leagues)
-                new_league_to_add = League(self.next_oid(), league_name)
-                self.add_league(new_league_to_add)
                 list_of_teams_in_league = []
                 for row in csvreader:
                     team_name = row[0]
                     team_member = row[1]
                     member_email = row[2]
-                    _last_oid = len(new_league_to_add.teams)
+                    _last_oid = len(league.teams)
                     team_member = TeamMember(self.next_oid(), team_member, member_email)
-                    if len(new_league_to_add.teams) == 0:
+                    if len(league.teams) == 0:
                         team_name = Team(self.next_oid(), team_name)
-                        new_league_to_add.add_team(team_name)
+                        league.add_team(team_name)
                         team_name.add_member(team_member)
                         list_of_teams_in_league.append(str(team_name.name))
                         continue
                     elif team_name in list_of_teams_in_league:
-                        for x in new_league_to_add.teams:
+                        for x in league.teams:
                             for y in x.name.split(":"):
                                 if y == team_name:
                                     x.add_member(team_member)
@@ -86,7 +84,7 @@ class LeagueDatabase:
                     else:
                         team_name = Team(self.next_oid(), team_name)
                         team_name.add_member(team_member)
-                        new_league_to_add.add_team(team_name)
+                        league.add_team(team_name)
                         list_of_teams_in_league.append(str(team_name.name))
                 print(list_of_teams_in_league)
         except FileNotFoundError:

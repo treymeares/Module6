@@ -60,10 +60,10 @@ class MainWindow(QtBaseWindow, Ui_MainWindow):
 
             if dia_file_name[0].endswith('.pickle'):
                 league_loaded = LeagueDatabase.load(str(dia_file_name[0]))
-                print(league_loaded)
+                self._dia_leagues.clear()
                 for x in league_loaded.leagues:
                     self._dia_leagues.append(x)
-                    self.update_ui()
+        self.update_ui()
 
     def action_save_triggered(self):
         file, check = QFileDialog.getSaveFileName(None, "Save File",
