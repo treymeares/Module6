@@ -1,8 +1,7 @@
 import sys
 
-from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QMessageBox, QDialog
-
+from PyQt5 import QtWidgets, uic, QtGui, QtCore
+from PyQt5.QtWidgets import *
 
 from team_member import TeamMember
 
@@ -17,11 +16,14 @@ class EditMembersDialog(QtBaseWindow, Ui_MainWindow):
         self.delete_member_list = []
         self.setupUi(self)
         self.delete_member.clicked.connect(self.delete_button_clicked)
-        self.add_update.clicked.connect(self.add_button_clicked)
+        self.add_member.clicked.connect(self.add_button_clicked)
+        self.update_member.clicked.connect(self.update_button_clicked)
+        self.team_members_widget.itemClicked.connect(self.on_clicked)
         if team_from_main:
             for x in team_from_main.members:
                 self._dia_members_list.append(x)
                 self.update_ui()
+        self.current_textbox = None
 
     def warn(self, title, message):
         mb = QMessageBox(QMessageBox.Icon.Critical, title, message, QMessageBox.StandardButton.Ok)
@@ -65,11 +67,38 @@ class EditMembersDialog(QtBaseWindow, Ui_MainWindow):
         self.update_ui()
         self._new_member_list.append(m)
 
+    def update_button_clicked(self):
+        selection = self.team_members_widget.selectedItems()
+        if len(selection) == 0:
+            return -1
+        assert len(selection) == 1
+        selected_item = selection[0]
+        for i, l in enumerate(self._dia_members_list):
+            if str(l) == selected_item.text():
+                l.name = self.member_name.text()
+                l.email = self.member_email.text()
+                l.oid = self.member_oid.text()
+        self.update_ui()
+
     def update_ui(self):
         self.team_members_widget.clear()
         for x in self._dia_members_list:
             self.team_members_widget.addItem(str(x))
             print(x)
+
+    def on_clicked(self, item):
+        selection = self.team_members_widget.selectedItems()
+        if len(selection) == 0:
+            return -1
+        assert len(selection) == 1
+        selected_item = selection[0]
+        for i, l in enumerate(self._dia_members_list):
+            if str(l) == selected_item.text():
+                self.member_name.setText(l.name)
+                self.member_email.setText(l.email)
+                self.member_oid.setText(str(l.oid))
+        return -1
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

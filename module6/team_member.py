@@ -5,7 +5,7 @@ from module6.emailer import Emailer
 
 
 class TeamMember(IdentifiedObject):
-#used to set the team members for the teams
+    # used to set the team members for the teams
     @property
     def name(self):
         '''
@@ -14,6 +14,10 @@ class TeamMember(IdentifiedObject):
         '''
         return self._name
 
+    @name.setter
+    def name(self, mem_name):
+        self._name = mem_name
+
     @property
     def email(self):
         '''
@@ -21,6 +25,10 @@ class TeamMember(IdentifiedObject):
         :return: the email of tyhe team member
         '''
         return self._email
+
+    @email.setter
+    def email(self, mem_em):
+        self._email = mem_em
 
     def __init__(self, oid, name, email):
         '''
@@ -42,7 +50,6 @@ class TeamMember(IdentifiedObject):
         :return: the output from the emailer class
         '''
         return emailer.send_plain_email([self.email], subject, message)
-
 
     def __str__(self):
         '''

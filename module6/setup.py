@@ -1,13 +1,6 @@
-from setuptools import setup
+from distutils.core import setup
 
-setup(
-    name='Module6',
-    version='1.1',
-    packages=['tests'],
-    package_dir={'': 'Module6'},
-    url='',
-    license='',
-    author='Trey Meares',
-    author_email='trey.meares@me.com',
-    description='League Database Explorer'
-)
+setup(name='main_window',
+      version='1.0',
+      py_modules=['main_window'],
+      )

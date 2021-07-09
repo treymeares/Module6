@@ -121,17 +121,33 @@
     <string>ID:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="add_update">
+  <widget class="QPushButton" name="add_member">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>60</x>
      <y>340</y>
-     <width>131</width>
-     <height>26</height>
+     <width>111</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="toolTipDuration">
+    <number>-7</number>
+   </property>
+   <property name="text">
+    <string>Add Member</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="update_member">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>340</y>
+     <width>121</width>
+     <height>28</height>
     </rect>
    </property>
    <property name="text">
-    <string>Add/Update</string>
+    <string>Update Member</string>
    </property>
   </widget>
  </widget>

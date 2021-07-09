@@ -11,6 +11,10 @@ class IdentifiedObject:
         '''
         return self._oid
 
+    @oid.setter
+    def oid(self, value):
+        self._oid = value
+
     def __init__(self, id):
         '''
         constructor for class to set the id.
