@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QMessageBox, QFileDialog, QDialog
 from source.emailer import Emailer
 from source.league_database import LeagueDatabase
 from source.league import League
-from user_interface.edit_dialog import EditDialog
+from ui.edit_dialog import EditDialog
 
 Ui_MainWindow, QtBaseWindow = uic.loadUiType("main_window.ui")
 
