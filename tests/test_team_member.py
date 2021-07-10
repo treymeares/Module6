@@ -1,6 +1,6 @@
-from source import TeamMember
+from source.team_member import TeamMember
 import unittest
-from source import Emailer
+from source.emailer import Emailer
 
 
 class TeamMemberTests(unittest.TestCase):

@@ -1,8 +1,8 @@
-from source import DuplicateEmail
-from source import DuplicateOID
-from source import Emailer
-from source import Team
-from source import TeamMember
+from source.DuplicateEmail import DuplicateEmail
+from source.DuplicateOid import DuplicateOID
+from source.emailer import Emailer
+from source.team import Team
+from source.team_member import TeamMember
 import unittest
 
 

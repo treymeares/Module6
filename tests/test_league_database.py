@@ -1,8 +1,8 @@
 import unittest
 import os
-from source import LeagueDatabase
-from source import League
-from source import Team
+from source.league_database import LeagueDatabase
+from source.league import League
+from source.team import Team
 
 
 class MyTestCase(unittest.TestCase):
