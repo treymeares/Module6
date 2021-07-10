@@ -4,9 +4,9 @@ from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import QDir
 from PyQt5.QtWidgets import QMessageBox, QDialog, QFileDialog
 
-from source.league_database import LeagueDatabase
+from source import LeagueDatabase
 from user_interface.edit_members_dialog import EditMembersDialog
-from source.team import Team
+from source import Team
 
 Ui_MainWindow, QtBaseWindow = uic.loadUiType("edit_dialog.ui")
 

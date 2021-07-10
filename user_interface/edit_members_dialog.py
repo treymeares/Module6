@@ -3,7 +3,7 @@ import sys
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import *
 
-from source.team_member import TeamMember
+from source import TeamMember
 
 Ui_MainWindow, QtBaseWindow = uic.loadUiType("edit_members_dialog.ui")
 
