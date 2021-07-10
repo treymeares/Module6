@@ -1,10 +1,10 @@
 import unittest
 
-from module6.DuplicateOid import DuplicateOID
-from module6.competition import Competition
-from module6.league import League
-from module6.team import Team
-from module6.team_member import TeamMember
+from source.DuplicateOid import DuplicateOID
+from source.competition import Competition
+from source.league import League
+from source.team import Team
+from source.team_member import TeamMember
 
 
 class LeagueTests(unittest.TestCase):

@@ -1,15 +1,13 @@
-import os
 import sys
 
-from PyQt5 import uic, QtWidgets, QtGui
+from PyQt5 import uic, QtWidgets
 from PyQt5.QtCore import QDir
-from PyQt5.QtWidgets import QMessageBox, QFileDialog, QDialog, QWidget
+from PyQt5.QtWidgets import QMessageBox, QFileDialog, QDialog
 
-from emailer import Emailer
-from league_database import LeagueDatabase
-from league import League
-from qt_files.edit_dialog import EditDialog
-from team import Team
+from source.emailer import Emailer
+from source.league_database import LeagueDatabase
+from source.league import League
+from user_interface.edit_dialog import EditDialog
 
 Ui_MainWindow, QtBaseWindow = uic.loadUiType("main_window.ui")
 

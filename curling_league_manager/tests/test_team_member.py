@@ -1,7 +1,6 @@
-from module6.fake_emailer import FakeEmailer
-from module6.team_member import TeamMember
+from source.team_member import TeamMember
 import unittest
-from module6.emailer import Emailer
+from source.emailer import Emailer
 
 
 class TeamMemberTests(unittest.TestCase):

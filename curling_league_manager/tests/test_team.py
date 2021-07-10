@@ -1,9 +1,8 @@
-from module6.DuplicateEmail import DuplicateEmail
-from module6.DuplicateOid import DuplicateOID
-from module6.emailer import Emailer
-from module6.fake_emailer import FakeEmailer
-from module6.team import Team
-from module6.team_member import TeamMember
+from source.DuplicateEmail import DuplicateEmail
+from source.DuplicateOid import DuplicateOID
+from source.emailer import Emailer
+from source.team import Team
+from source.team_member import TeamMember
 import unittest
 
 

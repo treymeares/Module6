@@ -1,7 +1,6 @@
 # Trey Meares M3 Project
 
-from module6.identified_object import IdentifiedObject
-from module6.emailer import Emailer
+from source.identified_object import IdentifiedObject
 
 
 class Competition(IdentifiedObject):

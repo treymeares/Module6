@@ -1,11 +1,10 @@
 import datetime
 import unittest
 
-from module6.competition import Competition
-from module6.fake_emailer import FakeEmailer
-from module6.team import Team
-from module6.team_member import TeamMember
-from module6.emailer import Emailer
+from source.competition import Competition
+from source.team import Team
+from source.team_member import TeamMember
+from source.emailer import Emailer
 
 
 class CompetitionTests(unittest.TestCase):

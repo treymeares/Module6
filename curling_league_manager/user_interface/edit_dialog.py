@@ -4,9 +4,9 @@ from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import QDir
 from PyQt5.QtWidgets import QMessageBox, QDialog, QFileDialog
 
-from league_database import LeagueDatabase
-from qt_files.edit_members_dialog import EditMembersDialog
-from team import Team
+from source.league_database import LeagueDatabase
+from user_interface.edit_members_dialog import EditMembersDialog
+from source.team import Team
 
 Ui_MainWindow, QtBaseWindow = uic.loadUiType("edit_dialog.ui")
 
@@ -43,7 +43,7 @@ class EditDialog(QtBaseWindow, Ui_MainWindow):
             file_name_list = dia_file_name[0].split("/")
             if dia_file_name[0].endswith('.csv'):
                 qb = LeagueDatabase.instance()
-                qb.import_league(self.current_league, f"../{file_name_list[-1]}")
+                qb.import_league(self.current_league, f"../source/{file_name_list[-1]}")
                 print(qb)
                 for x in self.current_league.teams:
                     if x not in self._dia_teams_list:

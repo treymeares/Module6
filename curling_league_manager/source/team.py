@@ -1,8 +1,7 @@
 # Trey Meares M3 Project
-from module6.DuplicateEmail import DuplicateEmail
-from module6.identified_object import IdentifiedObject
-from module6.emailer import Emailer
-from module6.DuplicateOid import DuplicateOID
+from source.DuplicateEmail import DuplicateEmail
+from source.identified_object import IdentifiedObject
+from source.DuplicateOid import DuplicateOID
 
 
 class Team(IdentifiedObject):

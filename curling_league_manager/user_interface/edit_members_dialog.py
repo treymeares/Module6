@@ -1,9 +1,9 @@
 import sys
 
-from PyQt5 import QtWidgets, uic, QtGui, QtCore
+from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import *
 
-from team_member import TeamMember
+from source.team_member import TeamMember
 
 Ui_MainWindow, QtBaseWindow = uic.loadUiType("edit_members_dialog.ui")
 

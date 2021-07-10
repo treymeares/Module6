@@ -3,9 +3,8 @@ import os
 import pickle
 from os import path
 
-from module6.team import Team
-from module6.league import League
-from module6.team_member import TeamMember
+from source.team import Team
+from source.team_member import TeamMember
 
 
 class LeagueDatabase:

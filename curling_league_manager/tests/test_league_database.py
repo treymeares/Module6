@@ -1,15 +1,15 @@
 import unittest
 import os
-from module6.league_database import LeagueDatabase
-from module6.league import League
-from module6.team import Team
+from source.league_database import LeagueDatabase
+from source.league import League
+from source.team import Team
 
 
 class MyTestCase(unittest.TestCase):
 
     def test_3_import_league_reads_utf_8_values(self):
         qb = LeagueDatabase.instance()
-        qb.import_league("NPlayers", "../scrambled_teams.csv")
+        qb.import_league("NPlayers", "../source/Teams.csv")
         league_1 = qb.leagues[0]
         self.assertEqual("NPlayers", league_1.name)
         self.assertEqual(4, len(league_1.teams))
@@ -36,7 +36,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_2_export_league_reads_utf_8_values(self):
         db = LeagueDatabase.instance()
-        db.import_league("RPlayers", "../scrambled_teams.csv")
+        db.import_league("RPlayers", "/Users/admin/Desktop/CPSC 4970/Module6/curling_league_manager/source/Teams.csv")
         league_1 = db.leagues[0]
         db.export_league(league_1, "../Fighters.csv")
         self.assertTrue(os.path.isfile("../Fighters.csv"))
@@ -69,7 +69,7 @@ class MyTestCase(unittest.TestCase):
         fast_league.add_league(league)
         fast_league.add_league(league2)
         fast_league.save("../GoodFolks1.pickle")
-        self.assertTrue(os.path.isfile("../GoodFolks1.pickle"))
+        self.assertTrue(os.path.isfile("../source/GoodFolks1.pickle"))
 
     def test_1_save_file_as_backup(self):
         t = Team(1, "Ice Maniacs")
@@ -79,7 +79,7 @@ class MyTestCase(unittest.TestCase):
         first_league_1.add_league(league)
         first_league_1.save("../NewFolks.pickle")
         first_league_1.save("../NewFolks.pickle")
-        self.assertTrue(os.path.isfile("../NewFolks.pickle.backup"))
+        self.assertTrue(os.path.isfile("../source/NewFolks.pickle.backup"))
 
     def test_f_exporting_csv_file_does_exist(self):
         first_league = LeagueDatabase.instance()
